@@ -333,7 +333,9 @@ Lint tools : Static checking of Python or C++ source code for errors and standar
 
 ---
 
+
 ### Environment setup files
+
 
 - Setup file generated at initialization of a workspace: setup.bash, setup.zsh ...
 
@@ -341,12 +343,10 @@ Lint tools : Static checking of Python or C++ source code for errors and standar
 
     ``$ source /opt/ros/<distro>/setup.bash ``
 
-    <!-- Why? ROS relies on the notion of combining spaces using the shell environment. -->
-
 - Source your workspace:
     ``$ source <ws-path>/install/setup.bash ``
 
-**ROS can find and use any resource inside the ROS environment**
+  **ROS can find and use any resource inside the ROS environment**
 
 
 ---
@@ -379,6 +379,7 @@ $ colcon build --symlink-install
 - After `colcon build` in your workspace, source ROS env :
 `$ source <ws-path>/install/setup.bash`
 (including /opt/ros/`<distro>`/setup.bash)
+
 
 ---
 
