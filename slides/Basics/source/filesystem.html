@@ -201,51 +201,6 @@ https://docs.ros.org/en/humble/Tutorials/Creating-Your-First-ROS2-Package.html -
 
   - `<depend>` : All-in-one (`<build_depend>`, `<build_export_depend>` and `<exec_depend>`)
 
-<!-- *Common parts* for Python and CMake packages
-- `<exec_depend>`: Required at execution-time
-(e.g. Python: rclpy, CMake: rclcpp, both: launch, launch_ros)
-
-format 3 https://www.ros.org/reps/rep-0149.html
-Declares a rosdep key or ROS package name
-- `<test_depend>` : Required for running unit tests
-(e.g. Python: ament_copyright, ament_flake8, python3-pytest, ament_pep257,  CMake: ament_lint_auto, ament_lint_common)
-- `<depend>` : All-in-one (if all are required)
-- `<export>` : Additional meta-data in the manifest for other tools that work with packages
-(e.g. Python: ament_python, CMake: ament_cmake)
-
-Only for *CMake packages*:
-- `<buildtool_depend>`: A tool that is executed during the build process.
-- `<build_depend>`: Required for building (e.g. rclcpp, ament_cmake)
-- `<build_export_depend>` : If exported header dependes on other ones
--->
-
-
-<!--
- ## Package content - `setup.cfg` (Python package)
-Example (**turtlebot_teleop** package):
-package path: ~/devel_src/src/turtlebot/turtlebot_teleop
-
-![image](../static/setupcfg.png)
--->
-<!--
-
-In general:
-  ```
-  [develop]
-  script-dir=$base/lib/<package-name>
-  [install]
-  install-scripts=$base/lib/<package-name>
-  ```
-  Example:
-  File Path:~/devel_ws/src/turtlebot3/turtlebot3_teleop/setup.cfg
-  ```
-  [develop]
-  script-dir=$base/lib/turtlebot3_teleop
-  [install]
-  install-scripts=$base/lib/turtlebot3_teleop
-  ```
--->
-
 ---
 
 ### Package content - `setup.py` (Python)
@@ -275,18 +230,10 @@ package path: ~/devel_src/src/turtlebot/turtlebot_teleop
   - install the executable **teleop_keyboard** to
 `devel_ws/install/turtlebot3_teleop/lib/
 turtlebot3_teleop/`
-<!--
-So you can find **teleop_keyboard** here :
-`devel_ws/install/turtlebot3_teleop/lib/turtlebot3_teleop/
-teleop_keyboard` -->
+
     ]
 ]
 
-
-
-<!--
-   entry_scripts Like the CMakeLists add_executable macro, you can add your python scripts here.
--->
 
 ---
 
@@ -302,90 +249,12 @@ Example:
 - Mostly CMake, plus ament-specific ones
 
 ---
+
 CMakeLists.txt Example:
 
 ![image](../static/cmakefile_detail.png)
 
-
-<!-- - Template:
-
-    * Step 1:
-
-    ```
-    cmake_minimum_required(VERSION 3.5)
-    project(my_package_cplusplus)
-    # Default to C99
-    if(NOT CMAKE_C_STANDARD)
-    set(CMAKE_C_STANDARD 99)
-    endif()
-    # Default to C++14
-    if(NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 14)
-    endif()
-
-    if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    add_compile_options(-Wall -Wextra -Wpedantic)
-    endif()
-    ```
-
-
-- Template:
-
-    * Step 2:
-
-    ```
-    # find dependencies
-    find_package(ament_cmake REQUIRED)
-    ```
-
-    * Step 3:
-
-    ```
-    add_executable(my_node_cplusplus src/my_node_cplusplus.cpp)
-
-    ```
-    Adds an executable target called **my_node_cplusplus** to be built from the source file **src/my_node_cplusplus.cpp**
-
-    * Step 4:
-
-    ```
-    target_include_directories(my_node_cplusplus PUBLIC
-                            # defined in "add_executable"
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>)
-    ```
-    This adds all files in the folder **"your package name"/include** to the public interface during build time.
-
-
-- Template:
-
-    * Step 5
-    ```
-    install(TARGETS my_node_cplusplus
-    EXPORT export_${PROJECT_NAME}
-    DESTINATION lib/${PROJECT_NAME})
-    ```
-    install the executable `my_node_cplusplus` to `install/my_package_cplusplus/lib/my_package_cplusplus/`
-
-    For example you can find this file in this path  `devel_ws/install/my_package_cplusplus/lib/my_package_cplusplus/my_node_cplusplus`
-
-
-- Template:
-
-    * Step 6
-
-    ```
-    ament_package()
-    ```
-    The project setup is done by **ament_package()** and this call must occur exactly once per package.
-
-*Helpful documentation: https://cmake.org/cmake/help/v3.17/* -->
-
 ---
-
-<!--
-ament_cmake User Documentation https://docs.ros.org/en/humble/Guides/Ament-CMake-Documentation.html -->
-
 
 ### Colcon - a universal build tool
 
@@ -404,19 +273,6 @@ $ colcon build --symlink-install
 $ colcon build --packages-up-to  <name-of-pkg>
 ```
 **Helpful documentation: https://colcon.readthedocs.io/en/released/user/quick-start.html**
-<!-- --symlink-install.
-This allows the installed files to be changed by changing the files in the source space
-(e.g. Python files or other not compiled resourced) for faster iteration.  -->
-<!-- In the root of the workspace, run colcon build. Since build types such as ament_cmake do not
-support the concept of the devel space and require the package to be installed, colcon supports the option -->
-
-<!--
-catkin is based on CMake and provides a set of convenience functions to make writing CMake packages easier.
- It automates the generation of CMake config files as well as pkg-config files.
-  It additionally provides functions to register different kinds of tests.
- In ROS 2 a package can be a “vanilla” Python package whereas in ROS 1 any Python functionality is triggered from a CMake file.
- http://design.ros2.org/articles/build_tool.html
--->
 
 ---
 
@@ -445,12 +301,6 @@ https://docs.ros.org/en/humble/Guides/Ament-CMake-Documentation.html#linting -->
 `ament_lint_auto`: ament_cmake_copyright, ament_cmake_cppcheck,ament_cmake_flake8, ament_cmake_lint_cmake, ament_cmake_pep257, ament_xmllint
 `ament_lint_common`: ament_clang_format, ament_clang_tidy, ament_cmake_clang_format, ament_cmake_clang_tidy
 
-<!--
- - CMakeList.txt
-    ```
-    find_package(ament_lint_auto REQUIRED)
-    ament_lint_auto_find_test_dependencies()
-    ```-->
 ---
 
 ## Workspace
@@ -496,6 +346,7 @@ https://docs.ros.org/en/humble/Guides/Ament-CMake-Documentation.html#linting -->
     ``$ source <ws-path>/install/setup.bash ``
 
 ** ---> ROS can find and use any resource inside the ROS environment**
+
 ---
 
 ### Compile workspace Example:
@@ -525,127 +376,6 @@ $ colcon build --symlink-install
 - After `colcon build` in your workspace, source ROS env :
 `$ source <ws-path>/install/setup.bash`
 (including /opt/ros/`<distro>`/setup.bash)
-
-<!--
-- Check current env: echo $ROS_PACKAGE_PATH
-- Source your the ROS 2 installation workspace . We call this environment an *__underlay__*
- WHY? It provides our workspace with the necessary build dependencies for other packages. give example
-  ROS relies on the notion of combining spaces using the shell environment
--->
-
-<!--  --skip-keys "console_bridge fastcdr fastrtps libopensplice67 rti-connext-dds-5.3.1 urdfdom_headers" -->
-
-<!-- ## Let's Try
-
-#### 1. Create new Workspace
-
-```
-$ cd ~
-$ mkdir -p ~/dev_ws/src
-$ cd  ~/dev_ws/
-```
-
-#### 2. Get packages from github
-```
-$ cd src
-# check which folder you are in
-$ pwd
-$ git clone https://github.com/ros2/examples -b eloquent
-# check your folder structure
-$ tree
-```
-
-
-Check dependencies of this package
-
-```
-$ source /opt/ros/eloquent/setup.bash
-$ rosdep install --from-paths src --ignore-src --rosdistro eloquent -y
-```
-
-#### 3. Using colcon to build packages
-```
-(sudo apt install python3-colcon-common-extensions)
-$ colcon build --symlink-install
-
-# check your folder structure
-$ tree
-```
-
-#### 4. Source the environment
-
-```
-$ source install/setup.bash
-```
-
-`dev_ws`: will be an __overlay__ on top of the existing ROS 2 installation(__underlay__).
-
-#### 5. Try a demo
-
-In the same terminal
-
-```
-$ ros2 run examples_rclpy_minimal_subscriber subscriber_member_function
-```
-
-
-#### 6.Open another terminal
-
-*check if you are in your workspace. If not you need to enter your workspace. If it is you need to source your workspace again:*
-
-```
-$ source install/setup.bash
-
-$ ros2 run examples_rclpy_minimal_publisher publisher_member_function
-```
-
-
-
-### Have a look at packages in this example
-
-| Python package | Cmake package |
-| ---------------| --------------|
-| setup.py       | ------------- |
-| setup.cfg      | CMakelists.txt|
-| package.xml    | package.xml |
-| source code    | source code |
--->
-<!-- https://github.com/ros2/examples -->
-
-<!--
-## Let's Try
-### Create a package
-1. !!! Source your ROS 2 installation.
-2. Find or create your workspace
-3. Create a package
-    ```
-    $ cd src
-    $ ros2 pkg create --build-type ament_python --node-name "node name" "package name"
-    ```
-4. Return to the root of your workspace:
-   ```
-   $ cd ..
-   ```
-5. Build your packages:
-    ```
-    $ colcon build --symlink-install
-    ```
-6. Source the setup file
-    ```
-    $ source install/setup.bash
-    ```
-7. Use the package
-    ```
-    $ ros2 run  "package name" "node name"
-    ```
-
-8. Examine package contents
-    ```
-    "package name"  package.xml  resource  setup.cfg  setup.py  test
-    "node name.py"
-    ``` -->
-<!--The setup.py file contains the same description, maintainer and license fields as package.xml
-https://docs.ros.org/en/humble/Tutorials/Creating-Your-First-ROS2-Package.html#what-is-a-ros-2-package -->
 
 ---
 
