@@ -134,14 +134,11 @@ https://docs.ros.org/en/humble/Tutorials/Creating-Your-First-ROS2-Package.html -
 
 ## Package content - Folder structure
 
-<!-- name: two_columns -->
+name: two_columns
 
 - Python package
 
-  ```
-  $ ros2 pkg create --build-type ament_python --dependencies [deps] --node-name my_node my_package
-  ```
-
+`$ ros2 pkg create --build-type ament_python --dependencies [deps] --node-name my_node my_package`
 <!-- ![img](../static/python_package_2.png)  -->
 <!-- setup.cfg https://docs.python.org/3/distutils/configfile.html tell setuptools to put your executables in lib  ros2 run can find it-->
 <!-- it’s not possible to write down everything needed to build a distribution a priori:
