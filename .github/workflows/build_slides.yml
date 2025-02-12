@@ -3,24 +3,25 @@ name: build_slides
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build_slides:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install package
         run: |
           sudo apt-get -y install chromium-browser
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "18"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
@@ -30,7 +31,7 @@ jobs:
         run: npm install decktape && npm install @shd101wyy/mume
 
       - name: Compile slides
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           architecture: "x64"
@@ -40,7 +41,7 @@ jobs:
           python3 export.py
 
       - name: Upload slides
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: slides
           path: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/export/
